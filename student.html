@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <script>
+        if (localStorage.getItem("userRole") !== "Student") {
+            alert("Bu sayfa sadece öğrenciler içindir!");
+            location.href = "/login.html";
+        }
+    </script>
+    <meta charset="UTF-8">
+    <title>LRP Öğrenci Paneli</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/all.min.css">
+    <style>
+        .sidebar {
+            width: 250px;
+            min-height: 100vh;
+            background: #2c3e50;
+            position: fixed;
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+        }
+
+        .nav-link {
+            color: #ecf0f1;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar p-3">
+        <h4>🎓 Öğrenci</h4><hr>
+        <ul class="nav flex-column">
+            <li class="nav-item"><a class="nav-link" onclick="loadPage('/view/my_pc.html')"><i class="fas fa-desktop me-2"></i>Zimmetim</a></li>
+            <li class="nav-item mt-5"><a class="nav-link text-danger" onclick="localStorage.clear(); location.href='/login.html'"><i class="fas fa-sign-out-alt me-2"></i>Çıkış</a></li>
+        </ul>
+    </div>
+    <div class="main-content"><div id="page-content"></div></div>
+
+    <script>
+        async function loadPage(url) {
+            const res = await fetch(url);
+            document.getElementById("page-content").innerHTML = await res.text();
+        }
+        window.onload = () => loadPage('/view/my_pc.html');
+    </script>
+</body>
+</html>
